@@ -272,6 +272,12 @@ class Graph {
    */
   virtual const FWResult floydWarshall() const;
   /**
+   * @brief Computes the transitive reduction of the graph and returns a graph that
+   * satisfies the transitive closure property.
+   * @return A copy of the graph with the transitive closure property satisfied.
+  */
+  virtual const Graph<T> transitive_reduction() const;
+  /**
    * @brief Function runs the prim algorithm and returns the minimum spanning
    * tree if the graph is undirected. Note: No Thread Safe
    * @return a vector containing id of nodes in minimum spanning tree & cost of
@@ -1506,6 +1512,34 @@ const MstResult Graph<T>::prim() const {
     }
   }
   result.success = true;
+  return result;
+}
+
+/*
+   * See Harry Hsu. "An algorithm for finding a minimal equivalent graph of a digraph.", 
+   * Journal of the ACM, 22(1):11-16, January 1975
+   * 
+   * foreach x in graph.vertices
+   *   foreach y in graph.vertices
+   *     foreach z in graph.vertices
+   *       delete edge xz if edges xy and yz exist
+  */
+template <typename T>
+const Graph<T> transitive_reduction() const {
+  Graph<T> result = this;
+
+  std::shared_ptr<CXXGRAPH::AdjacencyMatrix<T>> adjacencyMatrix = result.getAdjMatrix();
+  for(Node<T>* node : *adjacencyMatrix)
+  {
+    for(Node<T>* node : *adjacencyMatrix)
+    {
+      if (this->containsEdge())
+      for(Node<T>* node : *adjacencyMatrix)
+      {
+      }
+    }
+  }
+
   return result;
 }
 
